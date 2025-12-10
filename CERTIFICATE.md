@@ -14,7 +14,8 @@ It is updated manually after each completed module.
 
 | #  | Project Name                        | Status     | Completion Date | Project README                        | Demo                           | Key Competencies |
 |----|------------------------------------|------------|------------------|----------------------------------------|--------------------------------|-------------------|
-| 00 | Foundations                        | ❌ Pending | -                | projects/00-foundations/README.md      | projects/00-foundations/demo/  | -                 |
+| 00 | Foundations | ✅ Completed | 2025-12-10 | projects/00-foundations/README.md | projects/00-foundations/demo/ | OpenAI Python SDK, tokens, latency, cost basics |
+
 | 01 | Basic Chat API                     | ❌ Pending | -                | projects/01-basic-chat/README.md       | projects/01-basic-chat/demo/   | -                 |
 | 02 | Context Engineering                | ❌ Pending | -                | projects/02-context-engineering/README.md | projects/02-context-engineering/demo/ | -         |
 | 03 | JSON Mode                          | ❌ Pending | -                | projects/03-json-mode/README.md        | projects/03-json-mode/demo/    | -                 |
