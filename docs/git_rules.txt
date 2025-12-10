@@ -1,0 +1,299 @@
+# Git Rules – openai-mastery-24
+# Purpose:
+#   This document defines the Git workflow and conventions used in the
+#   openai-mastery-24 repository. The goal is to practice professional-level
+#   Git habits while building the 24 OpenAI/AI projects.
+
+==================================================
+1. GENERAL PRINCIPLES
+==================================================
+
+- The `main` branch must always be:
+  - stable
+  - deployable / demo-ready
+  - never broken by half-done experiments
+
+- No direct commits to `main`.
+  - All changes go through branches + Pull Request (PR).
+
+- Every project (00–24) and every relevant feature should have its own branch.
+
+- Think like a team, even if the project is personal:
+  - small, focused branches
+  - clear commits
+  - documented PRs
+  - readable history
+
+
+==================================================
+2. BRANCH STRATEGY
+==================================================
+
+2.1. Main branch
+
+- Name: `main`
+- Role:
+  - Holds the "official" version of the repository.
+  - Must be protected in GitHub:
+    - no direct pushes
+    - merge via Pull Request only
+
+- Contents:
+  - Completed and reviewed project modules
+  - Stable documentation
+
+--------------------------------------------------
+
+2.2. Project branches
+
+- Pattern:
+  - `projectXX`
+  - where `XX` is a zero-padded project number (00, 01, 02, …, 24)
+
+- Examples:
+  - `project00`
+  - `project01`
+  - `project10`
+
+- Usage:
+  - One branch per project, used as the "main working branch" for that project.
+  - All features for that project branch out from here when necessary.
+
+--------------------------------------------------
+
+2.3. Feature branches (inside a project)
+
+- Pattern:
+  - `projectXX/feature-<short-name>`
+
+- Examples:
+  - `project00/feature-notebook-foundations`
+  - `project00/feature-cost-analysis`
+  - `project01/feature-cli-chat`
+  - `project10/feature-rag-indexing`
+
+- Usage:
+  - Used for specific pieces of work inside a project.
+  - Helps keep PRs small and focused.
+
+--------------------------------------------------
+
+2.4. Sub-feature branches (optional, for complex work)
+
+- Pattern:
+  - `projectXX/feature-<short-name>/sub-<subname>`
+
+- Examples:
+  - `project00/feature-cost-analysis/sub-refactor-token-pricing`
+  - `project14/feature-multiagent/sub-planning-loop`
+
+- Usage:
+  - Use when a feature is large enough to be split into smaller steps.
+  - Not mandatory, but allowed when it helps organization.
+
+
+==================================================
+3. BRANCH WORKFLOW
+==================================================
+
+3.1. Starting a new project
+
+- Always create a new branch before starting:
+
+  Example for Project 01:
+    git checkout main
+    git pull origin main
+    git checkout -b project01
+
+- All work related to that project starts from `project01`.
+
+--------------------------------------------------
+
+3.2. Starting a new feature inside a project
+
+- From the project branch:
+
+    git checkout project01
+    git pull origin project01
+    git checkout -b project01/feature-basic-chat-cli
+
+- Implement feature, commit changes, push branch:
+
+    git add .
+    git commit -m "feat: add basic chat CLI for project01"
+    git push -u origin project01/feature-basic-chat-cli
+
+- Open a Pull Request:
+  - Base: `project01`
+  - Compare: `project01/feature-basic-chat-cli`
+
+- After review (by you) and tests, merge PR into `project01`.
+
+--------------------------------------------------
+
+3.3. Merging a project into main
+
+- When a project reaches a stable milestone (e.g., first complete version):
+
+  1. Ensure `projectXX` is up-to-date with `main`:
+       git checkout projectXX
+       git pull origin projectXX
+       git checkout main
+       git pull origin main
+       git checkout projectXX
+       git merge main   # resolve conflicts if needed
+
+  2. Push updated `projectXX` branch:
+       git push origin projectXX
+
+  3. Open PR:
+     - Base: `main`
+     - Compare: `projectXX`
+     - Title: `Project XX – <short summary>`
+
+  4. Review, approve, merge.
+  5. Optionally delete branch `projectXX` after merge:
+       git branch -d projectXX
+       git push origin --delete projectXX
+
+==================================================
+4. COMMIT MESSAGE CONVENTIONS
+==================================================
+
+- Use short, descriptive messages with a type prefix:
+
+Common prefixes:
+  - feat:   new feature
+  - fix:    bug fix
+  - docs:   documentation changes
+  - refactor: code restructuring
+  - chore:  maintenance, config, tooling
+  - test:   add or update tests
+
+Examples:
+  - feat: add foundations notebook for project00
+  - docs: document temperature vs top_p behavior
+  - fix: correct latency calculation for model comparison
+  - refactor: extract cost estimation helper function
+
+
+==================================================
+5. PULL REQUEST (PR) PRACTICES
+==================================================
+
+5.1. General rules
+
+- Every change that affects `main` must go through a PR.
+- Ideal PR size:
+  - small and focused
+  - one logical change per PR whenever possible
+
+- Suggested PR sections:
+  - What was done
+  - Why this matters (link to projectXX)
+  - How to test
+  - Screenshots or logs (if relevant)
+  - Checklist
+
+--------------------------------------------------
+
+5.2. PR Template (suggested content)
+
+Create `.github/pull_request_template.md` with:
+
+  # What was done
+  (Brief description of the changes)
+
+  # Why this change is important
+  (Link to projectXX and explain what was learned technically)
+
+  # How to test
+  (Steps or commands to reproduce and validate)
+
+  # Checklist
+  - [ ] Code runs locally
+  - [ ] Notebook(s) updated (if applicable)
+  - [ ] Docs updated (if applicable)
+  - [ ] No direct commits to main
+
+==================================================
+6. LABELS (ORGANIZATION)
+==================================================
+
+6.1. Project labels
+
+- Used to tag PRs/issues by project:
+
+  - project00
+  - project01
+  - ...
+  - project24
+
+6.2. Type labels
+
+- To identify the nature of the change:
+
+  - feature
+  - bugfix
+  - docs
+  - refactor
+  - experiment
+  - infra
+
+6.3. Priority labels (optional)
+
+  - priority:high
+  - priority:medium
+  - priority:low
+
+6.4. Status labels (optional)
+
+  - status:wip      (work in progress)
+  - status:ready    (ready for review)
+  - status:blocked  (waiting on something)
+
+Using labels makes it easy to:
+  - filter PRs per project
+  - track progress
+  - review history later
+
+
+==================================================
+7. BRANCH PROTECTION RULES (GITHUB)
+==================================================
+
+Recommended settings for `main`:
+
+- Protect `main` branch
+  - Require pull request before merging
+  - Disallow direct pushes
+  - Disallow force pushes
+  - Optionally: require at least 1 review
+  - Optionally: require that branch is up-to-date before merging
+
+Goal:
+  - Prevent accidental breakage of `main`
+  - Enforce the habit of working via branches + PRs
+
+
+==================================================
+8. PRACTICAL GUIDELINES
+==================================================
+
+- Before starting new work:
+  - Always check which branch you are on:
+      git status
+  - If on `main`, create a new branch before editing anything.
+
+- Never:
+  - Commit directly to `main`.
+  - Force-push to `main`.
+
+- Always:
+  - Use branches for new work.
+  - Open PRs and write at least a small explanation.
+  - Keep commits relatively small and meaningful.
+
+- Remember:
+  - This repository is also a training ground for professional Git practices.
+  - The goal is not only OpenAI mastery, but also disciplined engineering workflow.
