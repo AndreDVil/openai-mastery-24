@@ -1,40 +1,89 @@
 # openai-mastery-24
 
-Trilha completa de 24 projetos para dominar:
+**openai-mastery-24** is a complete 24-project learning path designed to master:
 
-- A API da OpenAI (Chat, Tools, RAG, Vision, Audio, Agents)
-- Engenharia de agentes (multi-agente, planejamento, governança)
-- RAG em nível enterprise
-- Produtos completos de IA (backend, frontend, operação)
+- OpenAI’s entire API ecosystem (Chat, Tools, JSON, RAG, Embeddings, Vision, Audio)
+- Agentic architectures (tool-using agents, multi-agent systems, planners, governance)
+- Enterprise-grade Retrieval-Augmented Generation (RAG)
+- Full AI product development (backend, frontend, deployment, observability)
+- Autonomous AI systems
 
-Cada projeto é documentado com:
+Each project includes:
 
-1. **README do projeto** – estilo estudo de caso  
-2. **Skills report** – competências adquiridas  
-3. **Demo** – notebook, app, vídeo ou screenshots
+1. **Project Case Study (README)**  
+2. **Skills Report** documenting the competencies gained  
+3. **Demo artifacts** (notebooks, apps, screenshots, videos)
 
-## Estrutura
+This repository functions as both a **portfolio** and a **living certification** of AI engineering expertise.
 
-- `docs/` – templates, estilo de documentação e diretrizes de demo  
-- `projetos/` – 24 projetos numerados, cada um com:
-  - `README.md`
-  - `skills-report.md`
-  - pasta `demo/` com artefatos de demonstração
-- `CERTIFICADO.md` – certificado vivo da trilha, com status de cada projeto
+---
 
-## Como navegar
+## 📁 Repository Structure
 
-- Comece pelo `projetos/00-foundations/`  
-- Siga a numeração em ordem (01, 02, 03, ...)  
-- Cada projeto descreve claramente:
-  - objetivos
-  - funcionalidades OpenAI dominadas
-  - resultados esperados
+docs/ → Templates, writing style, demo guidelines
+projects/ → 24 fully documented AI projects
+CERTIFICATE.md → Live certification of completed modules
+README.md → High-level overview of the learning path
 
-## Objetivo final
 
-Ao terminar os 24 projetos, este repositório funcionará como:
+---
 
-- **Portfólio público de IA**  
-- **Certificado vivo das suas competências**  
-- **Base de código reutilizável para novos produtos e pesquisas**
+## 🎯 Objective
+
+To become a world-class AI Engineer capable of building:
+
+- advanced AI agents  
+- autonomous systems  
+- RAG pipelines used in real companies  
+- full-stack AI products  
+- multimodal applications (vision, audio, planning)  
+
+By the end of the 24 projects, this repository becomes:
+
+- A **public proof** of technical mastery  
+- A **professional portfolio**  
+- A **reference implementation** for OpenAI-based systems  
+
+---
+
+## 🚀 How to Start
+
+1. Open the repository in VS Code  
+2. Use ChatGPT/Codex to assist you during development  
+3. Begin with `projects/00-foundations/`  
+4. After completing each project:  
+   - fill in the README  
+   - complete the skills report  
+   - add demo artifacts  
+   - update `CERTIFICATE.md`  
+
+---
+
+## 📝 Writing Style
+
+The documentation follows a **hybrid style**:
+
+- professional  
+- clear  
+- concise  
+- focused on real-world relevance  
+
+See `docs/documentation-style.md` for details.
+
+---
+
+## 🌐 GitHub Pages
+
+This repository is prepared to be published using GitHub Pages as a public website showcasing:
+
+- your demos  
+- project summaries  
+- certification progress  
+
+Instructions will be added as soon as the first demos are created.
+
+---
+
+## 🔗 License
+
+To be defined (MIT recommended).

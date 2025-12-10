@@ -1,0 +1,51 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg*
+.eggs/
+.Python
+pip-wheel-metadata/
+dist/
+build/
+.coverage*
+htmlcov/
+.pytest_cache/
+
+# Environments
+.env
+.env.*
+.venv/
+venv/
+env/
+
+# Notebooks
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+
+# Logs
+*.log
+
+# Mac / Windows trash
+.Trashes
+$RECYCLE.BIN/
