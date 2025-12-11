@@ -4,6 +4,7 @@
 Este documento apresenta a visão macro dos 24 projetos que compõem a trilha completa de engenharia de IA.  
 Cada módulo segue progressão lógica, cobrindo todos os pilares modernos de AI Engineering, OpenAI APIs, RAG, agentes e produtos reais.
 
+**SDK note:** All projects in this roadmap use the modern OpenAI Python SDK 2.9.0 (`OpenAI()` client + `chat.completions.create`). Legacy/1.x patterns are intentionally not used.
 ---
 
 # 📊 **Overview Table (High-Level Map)**

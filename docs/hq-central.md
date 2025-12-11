@@ -58,6 +58,28 @@ The objective is **mastery**.
 
 ---
 
+### OpenAI SDK Standard (Mandatory)
+
+All projects in *openai-mastery-24* must use the **modern OpenAI Python SDK 2.x**, fixed at:
+
+- `openai==2.9.0`
+- `from openai import OpenAI`
+- `client = OpenAI()`
+
+All text, JSON, tools and most interactions must go through:
+
+client.chat.completions.create(...)
+
+JSON Mode must use:
+
+response_format={"type": "json_object"}
+
+followed by explicit JSON parsing.
+
+Legacy/1.x patterns such as responses.create, output_text or older client styles are not allowed in this repository.
+
+Every project README must state the SDK version in the Architecture or How to Run sections.
+
 # 3. Your Learning Philosophy (Mandatory for All Projects)
 
 Every project in *openai-mastery-24* has **two objectives**:

@@ -29,6 +29,11 @@ This repository uses a **hybrid writing style**:
 7. Skills developed  
 8. Next steps  
 
+Each README must clearly state:
+- OpenAI SDK version (`openai==2.9.0`)
+- the client pattern (`from openai import OpenAI; client = OpenAI()`)
+- the main OpenAI endpoints used (e.g., `chat.completions.create`, `embeddings.create`, etc.)
+
 ---
 
 ## Tone

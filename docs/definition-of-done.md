@@ -143,9 +143,17 @@ Antes de considerar um projeto concluído:
 - Confirmar aderência a todos os itens  
 - Confirmar alinhamento com os padrões globais  
 
-Somente então o projeto é oficialmente marcado como **DONE**.
 
+
+## ✅ 9. OpenAI SDK compliance
+
+- All code must use the OpenAI Python SDK 2.9.0.
+- The unified `OpenAI()` client must be used (`from openai import OpenAI; client = OpenAI()`).
+- Legacy 1.x-style calls (e.g. `responses.create`, `output_text`, old clients) are not allowed.
+- The README must mention the SDK version explicitly.
 ---
+
+Somente então o projeto é oficialmente marcado como **DONE**.
 
 # ✔ Conclusão
 
