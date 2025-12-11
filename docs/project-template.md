@@ -8,6 +8,9 @@ Short description of the project and its purpose.
 - [ ] Technical objective 2  
 - [ ] Learning objective 3  
 
+> SDK standard: All implementations must use the OpenAI Python SDK 2.9.0 (`from openai import OpenAI; client = OpenAI()`).
+
+
 ## 3. OpenAI Features Explored
 Check only those relevant:
 - [ ] Chat Completions  
@@ -25,6 +28,7 @@ Brief description of the system design:
 - Components  
 - Data flow  
 - External dependencies  
+- **OpenAI SDK:** Python `openai==2.9.0`, `OpenAI()` unified client
 
 ## 5. How to Run the Demo
 Step-by-step instructions.

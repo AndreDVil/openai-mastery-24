@@ -14,6 +14,9 @@ The program combines:
 
 By the end, you will have built a **complete, senior-level portfolio** including agents, advanced RAG, multimodal apps, orchestration, automation, Realtime API, and a final autonomous multi-agent “Life OS.”
 
+All projects in this repository are standardized on the modern **OpenAI Python SDK 2.9.0**, using the unified `OpenAI()` client and `chat.completions.create` as the primary interface for text and JSON-based interactions.
+
+
 ---
 
 # 🧭 Purpose
