@@ -1,0 +1,18 @@
+# Project 01 - Basic Chat (stateful)
+# Started at: 2025-12-11T06:31:04
+# Model: gpt-4o-mini
+# Temperature: 0.7
+# top_p: 1.0
+# Max tokens (arg): None
+# ------------------------------
+
+[2025-12-11T06:31:04] SYSTEM: You are a helpful assistant in a terminal chat session.
+[2025-12-11T06:31:14] COMMAND: /help
+[2025-12-11T06:31:44] USER: hi
+[2025-12-11T06:31:47] ASSISTANT: Hello! How can I assist you today?
+[2025-12-11T06:32:06] USER: do you log our conversation?
+[2025-12-11T06:32:08] ASSISTANT: I don’t have the ability to log or store conversations. Each session is independent, so I can’t remember past interactions. How can I help you today?
+[2025-12-11T06:32:26] COMMAND: /clear
+[2025-12-11T06:32:32] USER: ok, tks
+[2025-12-11T06:32:34] ASSISTANT: You're welcome! How can I assist you today?
+[2025-12-11T06:35:26] COMMAND: /exit
