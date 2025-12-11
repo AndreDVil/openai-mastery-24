@@ -5,8 +5,8 @@ This file is NOT part of the project deliverables.
 It only exists to help you verify that the basic client works end-to-end.
 """
 
-from projects._03_json_mode.src.config import get_openai_client
-from projects._03_json_mode.src.json_client import JsonModeChatClient
+from projects.p03_json_mode.src.config import get_openai_client
+from projects.p03_json_mode.src.json_client import JsonModeChatClient
 
 
 def main():
