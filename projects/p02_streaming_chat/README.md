@@ -78,7 +78,7 @@ pip install openai python-dotenv
 OPENAI_API_KEY="your_key"
 
 ### Run
-python projects/02-streaming-chat/streaming_chat.py
+python projects/p02_streaming_chat/streaming_chat.py
 
 ### Useful flags
 --model gpt-4o-mini  
@@ -129,3 +129,4 @@ Streaming é um modo de resposta no qual o modelo envia pequenos fragmentos de t
 ---
 
 End of README.
+
