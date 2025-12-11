@@ -297,3 +297,5 @@ Goal:
 - Remember:
   - This repository is also a training ground for professional Git practices.
   - The goal is not only OpenAI mastery, but also disciplined engineering workflow.
+
+
