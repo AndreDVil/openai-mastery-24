@@ -14,33 +14,35 @@ It is updated manually after each completed module.
 
 | #  | Project Name                                   | Status     | Completion Date | Project README                                   | Demo                                              | Key Competencies |
 |----|------------------------------------------------|------------|------------------|---------------------------------------------------|---------------------------------------------------|-------------------|
-| 00 | Foundations                                    | ✅ Completed | 2025-12-10       | projects/00-foundations/README.md                 | projects/00-foundations/demo/                     | OpenAI Python SDK, tokens, latency, cost basics |
-| 01 | Basic Chat (Stateless & Stateful CLI Client)   | ✅ Completed | 2025-12-11       | projects/01-basic-chat/README.md                  | projects/01-basic-chat/demo/                      | Responses API, CLI design, conversation memory, logging |
-| 02 | Streaming Chat Client                          | ✅ Completed | 2025-12-11       | projects/02-streaming-chat/README.md              | projects/02-streaming-chat/demo/                  | Streaming mode, delta events, UX design, stateless architecture |
-| 03 | JSON Mode                                      | ❌ Pending | -                | projects/03-json-mode/README.md                   | projects/03-json-mode/demo/                       | - |
-| 04 | Tool Calling (Basic)                           | ❌ Pending | -                | projects/04-tool-calling-basic/README.md          | projects/04-tool-calling-basic/demo/              | - |
-| 05 | Tool Calling (Advanced)                        | ❌ Pending | -                | projects/05-tool-calling-advanced/README.md       | projects/05-tool-calling-advanced/demo/           | - |
-| 06 | Structured Reasoning                           | ❌ Pending | -                | projects/06-structured-reasoning/README.md        | projects/06-structured-reasoning/demo/            | - |
-| 07 | System Behavior Design                         | ❌ Pending | -                | projects/07-system-behavior-design/README.md      | projects/07-system-behavior-design/demo/          | - |
-| 08 | Memory Engine                                  | ❌ Pending | -                | projects/08-memory-engine/README.md               | projects/08-memory-engine/demo/                   | - |
-| 09 | Embeddings Fundamentals                        | ❌ Pending | -                | projects/09-embeddings-fundamentals/README.md     | projects/09-embeddings-fundamentals/demo/         | - |
-| 10 | RAG Minimal                                    | ❌ Pending | -                | projects/10-rag-minimal/README.md                 | projects/10-rag-minimal/demo/                     | - |
-| 11 | RAG Intermediate                               | ❌ Pending | -                | projects/11-rag-intermediate/README.md            | projects/11-rag-intermediate/demo/                | - |
-| 12 | RAG Enterprise                                 | ❌ Pending | -                | projects/12-rag-enterprise/README.md              | projects/12-rag-enterprise/demo/                  | - |
-| 13 | RAG Evals & Observability                      | ❌ Pending | -                | projects/13-rag-evals-observability/README.md     | projects/13-rag-evals-observability/demo/         | - |
-| 14 | Multi-Agent (Basic)                            | ❌ Pending | -                | projects/14-multi-agent-basic/README.md           | projects/14-multi-agent-basic/demo/               | - |
-| 15 | Multi-Agent (Cooperative)                      | ❌ Pending | -                | projects/15-multi-agent-cooperative/README.md     | projects/15-multi-agent-cooperative/demo/         | - |
-| 16 | Multi-Agent Planning & Meta                    | ❌ Pending | -                | projects/16-multi-agent-planning-meta/README.md   | projects/16-multi-agent-planning-meta/demo/       | - |
-| 17 | Agent Safety & Governance                      | ❌ Pending | -                | projects/17-agent-safety-governance/README.md     | projects/17-agent-safety-governance/demo/         | - |
-| 18 | Vision Multimodal                              | ❌ Pending | -                | projects/18-vision-multimodal/README.md           | projects/18-vision-multimodal/demo/               | - |
-| 19 | Audio, Voice & Streaming                       | ❌ Pending | -                | projects/19-audio-voice-streaming/README.md       | projects/19-audio-voice-streaming/demo/           | - |
-| 20 | Background Agents                              | ❌ Pending | -                | projects/20-background-agents/README.md           | projects/20-background-agents/demo/               | - |
-| 21 | Automations & Workflows                        | ❌ Pending | -                | projects/21-automations-workflows/README.md       | projects/21-automations-workflows/demo/           | - |
-| 22 | Full AI Product                                | ❌ Pending | -                | projects/22-full-ai-product/README.md             | projects/22-full-ai-product/demo/                 | - |
-| 23 | Operationalization & Security                  | ❌ Pending | -                | projects/23-operationalization-security-costs/README.md | projects/23-operationalization-security-costs/demo/ | - |
-| 24 | Flagship Autonomous System                     | ❌ Pending | -                | projects/24-flagship-autonomous-system/README.md  | projects/24-flagship-autonomous-system/demo/      | - |
+| 00 | Foundations                                    | ✅ Completed | 2025-12-10       | projects/p00_foundations/README.md                 | projects/p00_foundations/demo/                     | OpenAI Python SDK, tokens, latency, cost basics |
+| 01 | Basic Chat (Stateless & Stateful CLI Client)   | ✅ Completed | 2025-12-11       | projects/p01_basic_chat/README.md                  | projects/p01_basic_chat/demo/                      | Responses API, CLI design, conversation memory, logging |
+| 02 | Streaming Chat Client                          | ✅ Completed | 2025-12-11       | projects/p02_streaming_chat/README.md              | projects/p02_streaming_chat/demo/                  | Streaming mode, delta events, UX design, stateless architecture |
+| 03 | JSON Mode                                      | ❌ Pending | -                | projects/p03_json_mode/README.md                   | projects/p03_json_mode/demo/                       | - |
+| 04 | Tool Calling (Basic)                           | ❌ Pending | -                | projects/p04_tool_calling_basic/README.md          | projects/p04_tool_calling_basic/demo/              | - |
+| 05 | Tool Calling (Advanced)                        | ❌ Pending | -                | projects/p05_tool_calling_advanced/README.md       | projects/p05_tool_calling_advanced/demo/           | - |
+| 06 | Structured Reasoning                           | ❌ Pending | -                | projects/p06_structured_reasoning/README.md        | projects/p06_structured_reasoning/demo/            | - |
+| 07 | System Behavior Design                         | ❌ Pending | -                | projects/p07_system_behavior_design/README.md      | projects/p07_system_behavior_design/demo/          | - |
+| 08 | Memory Engine                                  | ❌ Pending | -                | projects/p08_memory_engine/README.md               | projects/p08_memory_engine/demo/                   | - |
+| 09 | Embeddings Fundamentals                        | ❌ Pending | -                | projects/p09_embeddings_fundamentals/README.md     | projects/p09_embeddings_fundamentals/demo/         | - |
+| 10 | RAG Minimal                                    | ❌ Pending | -                | projects/p10_rag_minimal/README.md                 | projects/p10_rag_minimal/demo/                     | - |
+| 11 | RAG Intermediate                               | ❌ Pending | -                | projects/p11_rag_intermediate/README.md            | projects/p11_rag_intermediate/demo/                | - |
+| 12 | RAG Enterprise                                 | ❌ Pending | -                | projects/p12_rag_enterprise/README.md              | projects/p12_rag_enterprise/demo/                  | - |
+| 13 | RAG Evals & Observability                      | ❌ Pending | -                | projects/p13_rag_evals_observability/README.md     | projects/p13_rag_evals_observability/demo/         | - |
+| 14 | Multi-Agent (Basic)                            | ❌ Pending | -                | projects/p14_multi_agent_basic/README.md           | projects/p14_multi_agent_basic/demo/               | - |
+| 15 | Multi-Agent (Cooperative)                      | ❌ Pending | -                | projects/p15_multi_agent_cooperative/README.md     | projects/p15_multi_agent_cooperative/demo/         | - |
+| 16 | Multi-Agent Planning & Meta                    | ❌ Pending | -                | projects/p16_multi_agent_planning_meta/README.md   | projects/p16_multi_agent_planning_meta/demo/       | - |
+| 17 | Agent Safety & Governance                      | ❌ Pending | -                | projects/p17_agent_safety_governance/README.md     | projects/p17_agent_safety_governance/demo/         | - |
+| 18 | Vision Multimodal                              | ❌ Pending | -                | projects/p18_vision_multimodal/README.md           | projects/p18_vision_multimodal/demo/               | - |
+| 19 | Audio, Voice & Streaming                       | ❌ Pending | -                | projects/p19_audio_voice_streaming/README.md       | projects/p19_audio_voice_streaming/demo/           | - |
+| 20 | Background Agents                              | ❌ Pending | -                | projects/p20_background_agents/README.md           | projects/p20_background_agents/demo/               | - |
+| 21 | Automations & Workflows                        | ❌ Pending | -                | projects/p21_automations_workflows/README.md       | projects/p21_automations_workflows/demo/           | - |
+| 22 | Full AI Product                                | ❌ Pending | -                | projects/p22_full_ai_product/README.md             | projects/p22_full_ai_product/demo/                 | - |
+| 23 | Operationalization & Security                  | ❌ Pending | -                | projects/p23_operationalization_security_costs/README.md | projects/p23_operationalization_security_costs/demo/ | - |
+| 24 | Flagship Autonomous System                     | ❌ Pending | -                | projects/p24_flagship_autonomous_system/README.md  | projects/p24_flagship_autonomous_system/demo/      | - |
 
 ---
 
 
 This certificate becomes complete once all 24 modules are done.
+
+

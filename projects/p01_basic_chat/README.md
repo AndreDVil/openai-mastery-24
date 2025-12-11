@@ -106,12 +106,12 @@ OPENAI_API_KEY=your_key_here
 
 ### 3. Run the **stateless** client
 ```bash
-python projects/01-basic-chat/basic_chat.py
+python projects/p01_basic_chat/basic_chat.py
 ```
 
 ### 4. Run the **stateful** client
 ```bash
-python projects/01-basic-chat/basic_chat_stateful.py
+python projects/p01_basic_chat/basic_chat_stateful.py
 ```
 
 ### Optional arguments
@@ -235,3 +235,4 @@ Duas obras famosas são "Dom Casmurro" e "Memórias Póstumas de Brás Cubas".
 
 **Project 01 now provides a complete, professional foundation for all next projects.**  
 It demonstrates engineering discipline, OpenAI mastery, and practical application design—exactly the goal of the *openai-mastery-24* repository.
+
