@@ -82,3 +82,8 @@ ENV/
 # NODE / JAVASCRIPT (for future frontend projects)
 ###############################################
 node_module_
+
+
+# Project logs
+logs/
+*.log
