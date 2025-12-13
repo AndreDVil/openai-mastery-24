@@ -11,7 +11,7 @@ The focus is on:
 1. Command Used
 ============================================================
 
-python projects/02-streaming-chat/streaming_chat.py \
+python projects/p02_streaming_chat/streaming_chat.py \
   --model gpt-4o-mini \
   --temperature 0.7 \
   --top_p 1.0 \
@@ -138,3 +138,4 @@ Goodbye!
 - Logs are saved under logs/project02-streaming-<timestamp>.log.
 
 End of demo.
+
