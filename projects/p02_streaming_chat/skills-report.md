@@ -1,97 +1,58 @@
-# Skills Report — Project 02  
-Streaming Chat Client (stateless)
+# Skills Report — Project 02
+Streaming Chat Client (Chat Completions, stateless)
 
 ## 1. Technical Skills Acquired
 
-### Streaming Mechanics
-- Implemented `client.responses.create(..., stream=True)`
-- Processed `response.output_text.delta` events
-- Built token-by-token incremental rendering
-- Captured first-token and total latency
+### Streaming Implementation (Chat Completions)
+- Implemented streaming via `client.chat.completions.create(..., stream=True)`
+- Processed streamed chunks incrementally
+- Extracted token deltas from `chunk.choices[0].delta.content`
+- Detected completion via `finish_reason`
 
-### Event Model Proficiency
-- Understood and handled:
-  - delta events  
-  - errors  
-  - completion signals  
-- Learned to ignore non-relevant events for clean UX  
+### Latency Instrumentation
+- Measured:
+  - time-to-first-token (TTFT)
+  - total response latency
+- Reported latency in a UX-friendly summary after streaming completion
 
-### CLI Engineering
-- Slash commands: /help, /config, /exit  
-- Graceful Ctrl+C / Ctrl+D handling  
-- Spaced layout for readability  
-- Color-coded roles (You / Assistant)
+### Stateless Interaction Design
+- Built a stateless message payload per request:
+  - optional system message
+  - single user message
+- Ensured reproducible behavior for testing and benchmarking
 
-### Stateless Architecture
-- Minimal input payload per request  
-- Optional system-level instruction  
-- Better reproducibility for testing and benchmarking  
+### CLI Engineering & UX
+- Implemented minimal commands:
+  - /help, /config, /exit
+- Improved readability (spacing, labels, optional color)
+- Handled empty input and interrupts cleanly
 
-### Logging
-- Lightweight log format  
-- Recorded:
-  - user messages  
-  - assistant streamed text  
-  - latency measurements  
+### Lightweight Logging
+- Implemented minimal session logging:
+  - user input
+  - streamed assistant text (reconstructed)
+  - latency summary
 
 ---
 
 ## 2. Engineering Concepts Practiced
-
-### Event-driven programming
-Streaming is reactive instead of synchronous.
-
-### Incremental output rendering
-Using:
-print(delta, end="", flush=True)
-
-### UX-first terminal design
-Spacing, color, layout, feedback messages.
-
-### Error resilience
-Clean handling of mid-stream error events.
-
-### Configuration flexibility
-Adjustable:
-- temperature  
-- top_p  
-- model  
-- system prompt  
-- max-output-tokens  
+- Event-driven streaming loops
+- Incremental rendering with immediate flush
+- Separation of concerns (CLI parsing vs streaming core)
+- Robust CLI ergonomics and error handling
 
 ---
 
-## 3. What Was Hard / Lessons Learned
-
-- Streaming requires a different mindset: incremental consumption  
-- First-token latency affects UX more than total latency  
-- Stateless prompts provide clarity during testing  
-- Clean terminal UX drastically improves perceived performance  
+## 3. Lessons Learned
+- Streaming requires a different mental model than single-shot responses
+- TTFT matters more for perceived responsiveness than total latency
+- Stateless payloads simplify debugging and comparisons across models
 
 ---
 
-## 4. Impact on Future Projects
-
-### Directly prepares for:
-- Project 03: JSON Mode  
-- Project 04: Token Cost Analyzer  
-- Project 05: Latency Benchmarks  
-
-### Enables:
-- multi-agent streaming  
-- concurrent streaming  
-- real-time dashboards  
-- streamed RAG pipelines  
-
----
-
-## 5. Final Notes
-This project establishes the foundational streaming architecture for the entire openai-mastery-24 roadmap.  
-The implementation is intentionally simple, modular, and extensible — ideal for future enhancements such as:
-
-- stateful streaming  
-- token counters  
-- multi-window output  
-- streaming JSON mode  
+## 4. Preparation for Next Projects
+This project provides the streaming foundation for:
+- Project 03 (JSON Mode): validated structured outputs
+- Project 04+: telemetry, benchmarks, tool calling, agentic UX
 
 End of skills report.
