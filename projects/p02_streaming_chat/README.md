@@ -1,132 +1,112 @@
-# Project 02 — Streaming Chat Client  
+# Project 02 — Streaming Chat Client (Chat Completions)
 openai-mastery-24
 
 ## 1. Overview
-This project implements a stateless streaming chat client using the OpenAI Responses API with `stream=True`.  
-It displays assistant responses token-by-token, providing a real-time experience similar to interactive web chat interfaces.
+This project implements a **stateless streaming chat CLI** using the **OpenAI Python SDK 2.9.0** and the **Chat Completions API**:
 
-This project builds upon the architecture of Project 01 but focuses entirely on:
+- `client.chat.completions.create(..., stream=True)`
+- incremental token rendering in the terminal
 
-- streaming UX  
-- incremental rendering  
-- token-level events  
-- latency measurement  
-- clean CLI ergonomics  
-
-The client runs in the terminal and accepts several configuration parameters.
+The focus is on event-driven streaming output, improved perceived latency, and clean CLI UX.
 
 ---
 
 ## 2. Objectives
-- Implement a fully functioning streaming client using OpenAI's Responses API  
-- Process token-level delta events in real time  
-- Build a professional terminal UX for streamed responses  
-- Maintain a stateless architecture  
-- Add minimal logging for observability  
+- Implement **token-by-token** streaming output in a terminal client.
+- Measure **first-token latency** and **total latency**.
+- Keep the client **stateless**: each user message is an independent request.
+- Follow Project 01 engineering standards (CLI structure, commands, logging, docs).
 
 ---
 
 ## 3. OpenAI Features Explored
-- Responses API in streaming mode  
-- `response.output_text.delta` events  
-- Error events (`response.error`)  
-- Optional system-level prompt injection (`--system`)  
-- First-token latency measurement  
-- Total latency measurement  
+- Chat Completions API via `client.chat.completions.create`
+- Streaming responses via `stream=True`
+- Delta handling:
+  - `chunk.choices[0].delta.content`
+- Finish handling:
+  - `chunk.choices[0].finish_reason`
 
 ---
 
 ## 4. Architecture
 
-### 4.1 High-Level Flow
-User input → Build request payload → Send request with `stream=True`  
-           → Receive delta events → Print chunks incrementally  
-           → Compute latency → Log session data  
+### 4.1 High-level flow
+User input → build messages[] → Chat Completions (stream=True)  
+→ iterate chunks → print `delta.content` as it arrives  
+→ compute latencies → optionally log output
 
-### 4.2 File Structure
-streaming_chat.py  
-  - parse_args()  
-  - print_header()  
-  - init_log_file()  
-  - build_input_messages()  
-  - stream_chat_once()  
-  - handle_command()  
-  - main()  
+### 4.2 Stateless message payload
+Each request uses a fresh messages array:
 
-### 4.3 Request Format
-Each request is stateless:
+- optional system message
+- single user message
 
+Example:
 [
   { "role": "system", "content": "<optional system prompt>" },
-  { "role": "user",   "content": "<user message>" }
+  { "role": "user",   "content": "<your message>" }
 ]
 
-### 4.4 Event Processing
-Core events processed:
-
-- response.output_text.delta → streamed text  
-- response.error → error during generation  
+### 4.3 Core streaming loop (conceptual)
+- Start timer
+- Call `client.chat.completions.create(..., stream=True)`
+- For each streamed chunk:
+  - read `choices[0].delta.content`
+  - print immediately and accumulate
+- Compute first-token and total latency
 
 ---
 
 ## 5. How to Run
 
 ### Install dependencies
-pip install openai python-dotenv
+pip install openai==2.9.0 python-dotenv
 
-### Environment variable
+### Configure environment
+Set:
 OPENAI_API_KEY="your_key"
 
 ### Run
-python projects/p02_streaming_chat/streaming_chat.py
+python projects/02-streaming-chat/streaming_chat.py --model gpt-4o-mini
 
-### Useful flags
---model gpt-4o-mini  
---temperature 0.7  
---top_p 1.0  
---max-output-tokens 256  
---system "You are a concise assistant."  
---no-color  
-
-### Example
-python streaming_chat.py --model gpt-4o-mini --system "Respond in Portuguese."
+### Common flags
+--model gpt-4o-mini
+--temperature 0.7
+--top_p 1.0
+--max-tokens 256
+--system "You are a helpful assistant."
+--no-color
 
 ---
 
 ## 6. Results & Examples
 
-Example streaming output (simplified):
+Example (simplified):
 
-You: Explique o que é streaming.
+You: Explain streaming in one paragraph.
 
 Assistant (streaming...):
+Streaming means the model sends partial text as it is generated, allowing the UI to render output incrementally.
 
-Streaming é um modo de resposta no qual o modelo envia pequenos fragmentos de texto conforme eles são gerados, oferecendo uma experiência mais rápida e fluida.
-
-  (first token: 0.412s · total: 1.983s)
+(first token: 0.410s · total: 1.920s)
 
 ---
 
 ## 7. Skills Developed
-- Real-time streaming processing  
-- Token-level event handling  
-- CLI engineering for interactive AI tools  
-- Stateless request patterns  
-- Latency instrumentation  
-- Logging design for minimal overhead  
+- Implementing streaming with `stream=True` in Chat Completions
+- Delta event processing (`choices[].delta.content`)
+- Latency instrumentation (first-token vs total)
+- Stateless request design
+- CLI UX improvements for streamed output
+- Minimal logging for observability
 
 ---
 
 ## 8. Future Improvements
-- Stateful streaming mode  
-- Pause/resume streaming  
-- Real-time token counters  
-- JSON-mode streaming  
-- Dark/light UI themes  
-- Export conversation to file  
-- Integration with telemetry modules  
-
----
+- Optional stateful mode (`--stateful`)
+- Include usage telemetry (if supported in the chosen SDK/model)
+- Improved formatting and line wrapping
+- Export transcripts to demo artifacts automatically
 
 End of README.
-
