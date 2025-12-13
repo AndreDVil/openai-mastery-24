@@ -1,238 +1,206 @@
-# Project 01 – Basic Chat (CLI Chat Client)
+# Project 01 – Basic Chat (CLI)
+**Stateless and Stateful Chat Client using OpenAI SDK 2.9.0**
+
+---
 
 ## 1. Overview
 
-This project delivers the first real OpenAI-powered application of the **openai-mastery-24** journey:  
-a professional-grade **Command-Line Chat Client**, implemented in two versions:
+Project 01 is the first fully functional application in the **openai-mastery-24** journey.
 
-- **`basic_chat.py`** → stateless chat loop  
-- **`basic_chat_stateful.py`** → stateful chat with memory + internal commands + logging  
+The goal of this project is to build a **professional-grade CLI chat client** using the **OpenAI Python SDK 2.9.0**, strictly following the **Chat Completions API** pattern:
 
-Both clients use the modern **OpenAI Responses API** and follow software engineering best practices:
-argument parsing, structured logging, clear UX, and extensible architecture.
+- `client.chat.completions.create`
+- Explicit `messages` structure (`role`, `content`)
+- No usage of the Responses API
 
-This project builds the foundation for more complex LLM applications later (agents, tools, RAG, streaming, assistants).
+Two versions are implemented:
+
+- **Stateless CLI chat**  
+- **Stateful CLI chat with memory, commands, and logging**
+
+This project establishes the technical and architectural foundation for all subsequent projects.
 
 ---
 
 ## 2. Objectives
 
-### ✔ Technical Objectives
-- [x] Build a fully functional stateless CLI chat client  
-- [x] Add model selection via CLI arguments  
-- [x] Implement sampling controls (`temperature`, `top_p`)  
-- [x] Show per-response latency  
-- [x] Show token usage  
-- [x] Add output colorization for better UX  
-- [x] Add *stateful* chat with full conversation history  
-- [x] Add internal commands: `/help`, `/clear`, `/config`, `/history`, `/exit`  
-- [x] Add conversation logging to timestamped files  
-- [x] Enforce minimum `max_output_tokens`  
-- [x] Provide professional-grade CLI structure using `argparse`
+### Technical Objectives
+- [x] Use OpenAI SDK 2.9.0 unified client
+- [x] Use `chat.completions.create` exclusively
+- [x] Implement a stateless CLI chat loop
+- [x] Implement a stateful CLI chat with conversation memory
+- [x] Support model selection via CLI
+- [x] Support sampling controls (`temperature`, `top_p`)
+- [x] Support output token limits
+- [x] Display latency per request
+- [x] Display token usage (prompt / completion / total)
+- [x] Add internal slash commands
+- [x] Add optional logging to disk
+- [x] Follow clean CLI engineering practices
 
-### ✔ Learning Objectives
-- [x] Understand stateless vs. stateful chat patterns  
-- [x] Learn the structure of OpenAI’s Responses API  
-- [x] Build an interactive LLM application end-to-end  
-- [x] Practice clean CLI UX and loop design  
-- [x] Learn how to measure and interpret latency  
-- [x] Understand cost implications of token usage and long history  
-- [x] Establish a reusable boilerplate for Projects 02–24  
+### Learning Objectives
+- [x] Understand the Chat Completions mental model
+- [x] Master the `messages` schema (`role`, `content`)
+- [x] Understand stateless vs stateful conversations
+- [x] Learn how memory is simulated by resending context
+- [x] Build reusable CLI architecture for LLM apps
 
 ---
 
 ## 3. OpenAI Features Explored
 
 | Feature | Status |
-|--------|--------|
-| Responses API (`client.responses.create`) | ✅ Used extensively |
-| Latency measurement | ✅ Implemented |
-| Token usage (`response.usage`) | ✅ Implemented |
-| Model selection | ✅ via `--model` |
-| Temperature | ✅ via `--temperature` |
-| Top-p | ✅ via `--top_p` |
-| Max output tokens | ✅ via `--max-tokens` |
-| Stateful memory | ✅ in `basic_chat_stateful.py` |
-| Commands (`/clear`, `/history`…) | ✅ Implemented |
-| Logging | ✅ Implemented |
-| Streaming responses | ❌ Planned for Project 02 |
-| JSON mode | ❌ Not required in this project |
-| Tool calling | ❌ Will appear in later projects |
-| Realtime API | ❌ Out of scope here |
+|------|------|
+| Chat Completions API | ✅ |
+| `messages` schema | ✅ |
+| System / User / Assistant roles | ✅ |
+| Sampling (`temperature`, `top_p`) | ✅ |
+| Token usage | ✅ |
+| Latency measurement | ✅ |
+| Conversation memory (manual) | ✅ |
+| Streaming | ❌ (Project 02) |
+| JSON Mode | ❌ (Project 03) |
+| Tool calling | ❌ (Later projects) |
+| Multimodal input | ❌ (Later projects) |
 
 ---
 
 ## 4. Architecture
 
 ### Stateless Version (`basic_chat.py`)
-- Reads user input in a loop  
-- Sends **only the latest** prompt to the model  
-- Shows assistant output, latency, and token usage  
+- Sends one user message per request
+- No conversation history is preserved
+- Each request is independent
 
 ### Stateful Version (`basic_chat_stateful.py`)
-- Maintains and sends **full conversation history** on every request  
-- Supports internal commands:
-  - `/help`
-  - `/clear` (resets memory)
-  - `/history`
-  - `/config`
-  - `/exit`
-- Logs every action (system, user, assistant, commands) into timestamped files
+- Maintains an in-memory `messages` list
+- Sends full conversation history on each request
+- Supports internal commands
+- Logs the session to disk (optional)
 
-### Data Flow (Stateful)
+### Data Flow
 ```
-User → CLI → command handler? → (if not) history updated → OpenAI Responses API  
-→ assistant output → console + log file
+User input → CLI → messages[] → OpenAI Chat Completions API → Assistant output
 ```
-
-### External Dependencies
-- `openai` SDK  
-- `python-dotenv`  
-- A valid `OPENAI_API_KEY` in `.env`
 
 ---
 
-## 5. How to Run the Demo
+## 5. How to Run
 
-### 1. Install dependencies
+### Install dependencies
 ```bash
 pip install openai python-dotenv
 ```
 
-### 2. Create your `.env`
+### Set environment variable
+Create a `.env` file:
 ```bash
-OPENAI_API_KEY=your_key_here
+OPENAI_API_KEY=your_api_key_here
 ```
 
-### 3. Run the **stateless** client
+### Run stateless client
 ```bash
-python projects/p01_basic_chat/basic_chat.py
+python projects/01-basic-chat/basic_chat.py
 ```
 
-### 4. Run the **stateful** client
+### Run stateful client
 ```bash
-python projects/p01_basic_chat/basic_chat_stateful.py
+python projects/01-basic-chat/basic_chat_stateful.py
 ```
 
-### Optional arguments
-```
+### Optional CLI arguments
+```bash
 --model gpt-4o-mini
 --temperature 0.7
---top_p 1.0
+--top-p 1.0
 --max-tokens 128
-```
-
-Example:
-```bash
-python basic_chat_stateful.py --model gpt-4o --temperature 0.3 --max-tokens 64
+--no-log
 ```
 
 ---
 
-## 6. Commands (Stateful Version Only)
+## 6. Stateful Commands
+
+Available only in the stateful version:
 
 | Command | Description |
-|---------|-------------|
-| `/help` | Shows all commands |
-| `/clear` | Clears conversation history (keeps system prompt) |
-| `/history` | Prints the full conversation so far |
-| `/config` | Shows current model + sampling settings |
-| `/exit` | Exits the program immediately |
+|------|------|
+| `/help` | Show available commands |
+| `/history` | Print conversation history |
+| `/clear` | Clear memory (keeps system prompt) |
+| `/config` | Show runtime configuration |
+| `/exit` | Exit the application |
 
 ---
 
 ## 7. Logging
 
-All logs are stored under:
+When enabled, logs are written to:
 
 ```
 logs/project01-stateful-YYYYMMDD-HHMMSS.log
 ```
 
-Each line includes a timestamp and message role:
+Logged information includes:
+- system prompt
+- user messages
+- assistant responses
+- commands
+- timestamps
 
-```
-[2025-12-10T17:34:32] USER: quem é machado de assis?
-[2025-12-10T17:34:33] ASSISTANT: Machado de Assis foi...
-[2025-12-10T17:34:40] COMMAND: /history
-```
-
-Logging provides:
-
-- replayability  
-- debugging  
-- data for future fine-tuning  
-- transparency for model behavior  
-- useful audit trail for multi-turn interactions  
+The `logs/` directory is excluded via `.gitignore`.
 
 ---
 
-## 8. Results & Examples
+## 8. Demo
 
-### Example (Stateful)
+A full CLI demo transcript is available at:
+
 ```
-=== Project 01 — Basic Chat (STATEFUL) ===
-Using model: gpt-4o-mini
-Temperature: 0.7 | top_p: 1.0
-Max tokens (effective): model default
-Type '/help' for commands.
-
-You: quem é machado de assis?
-Assistant:
-Machado de Assis foi um escritor brasileiro...
-
-[latency: 1.213s]
-[tokens - input: 23, output: 42, total: 65]
---------------------------------------------------
-
-You: cite duas obras dele
-Assistant:
-Duas obras famosas são "Dom Casmurro" e "Memórias Póstumas de Brás Cubas".
+projects/01-basic-chat/demo/demo-cli.md
 ```
+
+The demo shows:
+- multi-turn stateful conversation
+- memory behavior
+- internal commands
+- latency and token usage
+- log file example
 
 ---
 
 ## 9. Skills Developed
 
-### 🔹 OpenAI API Skills
-- Using the **Responses API** in real applications  
-- Working with `response.output_text` & `response.usage`  
-- Managing history as a list of `{role, content}` objects  
-- Structuring arguments for LLM sampling behavior  
+### OpenAI API
+- Chat Completions API (SDK 2.9.0)
+- Message-based prompting
+- Token accounting
+- Sampling control
 
-### 🔹 Python Engineering Skills
-- Building interactive CLI tools  
-- Using `argparse` professionally  
-- Implementing `while True` control flow with `break` and `continue`  
-- Memory management in chat systems  
-- Timestamps, files, logging design  
-- Colorized terminal output  
-- Handling user commands cleanly  
+### Python & Engineering
+- CLI design with argparse
+- Stateful vs stateless architecture
+- Memory management
+- Logging
+- Clean control flow
+- Professional repository structure
 
-### 🔹 Conceptual Understanding
-- Stateless vs. stateful LLM interactions  
-- Why LLMs “remember” only if **we resend the history**  
-- Latency & token cost implications  
-- Clean software architecture for multi-project LLM repos  
+### Conceptual
+- LLM context handling
+- Cost vs latency trade-offs
+- Foundations for agents and RAG
 
 ---
 
 ## 10. Future Improvements
 
-| Feature | Status |
-|---------|--------|
-| Add streaming responses | ⏳ Upcoming in Project 02 |
-| Add JSON mode | To be explored in Project 03 |
-| Add structured error handling | Planned |
-| Add retries & rate-limit protection | Planned |
-| Add global config file | Planned |
-| Add async version | Possible |
-| Add TTS output for audio chat | Future project |
-| Add benchmarking tool | Future project |
-| Add unit tests | Eventually |
+- Streaming responses (Project 02)
+- JSON-structured outputs (Project 03)
+- Tool calling and function execution
+- Multimodal input
+- Long-term memory strategies
 
 ---
 
-**Project 01 now provides a complete, professional foundation for all next projects.**  
-It demonstrates engineering discipline, OpenAI mastery, and practical application design—exactly the goal of the *openai-mastery-24* repository.
-
+**Project 01 establishes the canonical CLI + Chat Completions pattern  
+used throughout the rest of the openai-mastery-24 track.**
