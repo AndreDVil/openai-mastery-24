@@ -17,7 +17,8 @@ It is updated manually after each completed module.
 | 00 | Foundations                                    | ✅ Completed | 2025-12-10       | projects/p00_foundations/README.md                 | projects/p00_foundations/demo/                     | OpenAI Python SDK, tokens, latency, cost basics |
 | 01 | Basic Chat (Stateless & Stateful CLI Client)   | ✅ Completed | 2025-12-11       | projects/p01_basic_chat/README.md                  | projects/p01_basic_chat/demo/                      | Responses API, CLI design, conversation memory, logging |
 | 02 | Streaming Chat Client                          | ✅ Completed | 2025-12-11       | projects/p02_streaming_chat/README.md              | projects/p02_streaming_chat/demo/                  | Streaming mode, delta events, UX design, stateless architecture |
-| 03 | JSON Mode                                      | ❌ Pending | -                | projects/p03_json_mode/README.md                   | projects/p03_json_mode/demo/                       | - |
+| 03 | JSON Mode Chat Client                          | ✅ Completed | 2025-12-13       | projects/p03_json_mode/README.md                   | projects/p03_json_mode/demo/                       | JSON Mode, contract-driven outputs, schema validation, controlled retry, system prompt governance |
+             | projects/p03_json_mode/demo/                       | - |
 | 04 | Tool Calling (Basic)                           | ❌ Pending | -                | projects/p04_tool_calling_basic/README.md          | projects/p04_tool_calling_basic/demo/              | - |
 | 05 | Tool Calling (Advanced)                        | ❌ Pending | -                | projects/p05_tool_calling_advanced/README.md       | projects/p05_tool_calling_advanced/demo/           | - |
 | 06 | Structured Reasoning                           | ❌ Pending | -                | projects/p06_structured_reasoning/README.md        | projects/p06_structured_reasoning/demo/            | - |
