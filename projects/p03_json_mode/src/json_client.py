@@ -1,16 +1,32 @@
 import json
+from typing import Any, Dict, List, Optional, Tuple
+
 from openai import OpenAI
-from typing import Dict, Any, Optional
 
 from .config import get_default_params
+from .prompts import DEFAULT_SYSTEM_PROMPT
+from .validators import ValidationResult, validate_structured_answer_lite
+
+
+def _parse_json(raw_text: str) -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
+    """
+    Parse raw JSON text into a Python dict.
+
+    Returns:
+        (data, error_message)
+    """
+    try:
+        data = json.loads(raw_text)
+        if not isinstance(data, dict):
+            return None, "Top-level JSON value must be an object (dict)."
+        return data, None
+    except Exception as e:
+        return None, str(e)
 
 
 class JsonModeChatClient:
     """
-    Minimal JSON Mode chat client.
-
-    This version sends a single request to the OpenAI API using JSON Mode
-    and attempts to parse the response as a Python dictionary.
+    JSON Mode chat client (Chat Completions API) with manual validation and controlled retry.
     """
 
     def __init__(
@@ -18,61 +34,156 @@ class JsonModeChatClient:
         client: OpenAI,
         model: Optional[str] = None,
         system_prompt: Optional[str] = None,
+        max_retries: int = 2,
+        debug: bool = False,
     ):
         """
-        Initialize the chat client.
+        Initialize the client.
 
         Parameters:
-            client (OpenAI): The OpenAI client instance.
-            model (str | None): Override model name if desired.
-            system_prompt (str | None): Optional system instruction for the model.
+            client: OpenAI SDK client.
+            model: Optional model override.
+            system_prompt: Optional system prompt override. If not provided, DEFAULT_SYSTEM_PROMPT is used.
+            max_retries: Number of corrective retries (default: 1).
         """
         self.client = client
         self.default_params = get_default_params()
 
-        # Override model only if user provides a custom one
         if model:
             self.default_params["model"] = model
 
-        # Internal message history list
-        self.messages = []
+        self.max_retries = max_retries
 
-        # Optional system instruction (helps the model understand the context)
-        if system_prompt:
-            self.messages.append({"role": "system", "content": system_prompt})
+        self.debug = debug
+
+        # Message history for multi-turn conversations
+        self.messages: List[Dict[str, str]] = []
+
+        # Always set a system prompt to govern JSON-only output and the exact contract
+        self.system_prompt = system_prompt or DEFAULT_SYSTEM_PROMPT
+        self.messages.append({"role": "system", "content": self.system_prompt})
+
+    def _debug(self, message: str) -> None:
+        """
+        Print debug messages only when debug mode is enabled.
+        """
+        if self.debug:
+            print(f"[DEBUG] {message}")
+
+    
+    
+    def _call_model(self) -> str:
+        """
+        Perform a single Chat Completions call and return raw assistant content (expected JSON string).
+        """
+        completion = self.client.chat.completions.create(
+            model=self.default_params["model"],
+            messages=self.messages,
+            response_format=self.default_params["response_format"],  # {"type":"json_object"}
+            temperature=self.default_params["temperature"],
+            top_p=self.default_params.get("top_p", 1.0),
+        )
+
+        # Chat Completions: assistant text is in choices[0].message.content
+        raw_text = completion.choices[0].message.content or ""
+        return raw_text
 
     def send(self, user_input: str) -> Dict[str, Any]:
         """
-        Send a user message to the model and return the parsed JSON response.
+        Send user input, enforce JSON-only output, validate the contract, and optionally retry once.
 
-        This minimal version performs exactly one API call.
-        No retries, no schema validation.
+        Returns:
+            A dict matching the StructuredAnswerLite contract, or a structured error object.
         """
-        # Add user message to the history
+        # Add user message to history
         self.messages.append({"role": "user", "content": user_input})
 
-        # Build request
-        payload = {
-            "model": self.default_params["model"],
-            "response_format": self.default_params["response_format"],
-            "temperature": self.default_params["temperature"],
-            "input": self.messages,
+        last_raw: str = ""
+        last_parse_error: Optional[str] = None
+        last_validation_errors: List[str] = []
+
+        for attempt in range(self.max_retries + 1):
+            self._debug(f"Attempt {attempt + 1}/{self.max_retries + 1}")
+            last_raw = self._call_model()
+
+            # Attempt to parse JSON
+            data, parse_error = _parse_json(last_raw)
+            if parse_error:
+                last_parse_error = parse_error
+
+                # Prepare corrective feedback for retry
+                if attempt < self.max_retries:
+                    self._inject_corrective_system_message(
+                        error_code="INVALID_JSON",
+                        details=[f"JSON parse error: {parse_error}"],
+                        raw_response=last_raw,
+                    )
+                    continue
+
+                # No retries left -> return structured error
+                return {
+                    "error": "INVALID_JSON",
+                    "raw_response": last_raw,
+                    "details": parse_error,
+                }
+
+            # Manual contract validation
+            result: ValidationResult = validate_structured_answer_lite(data)
+            if result.ok:
+                self._debug("Validation passed. Returning final JSON response.")
+                # Store assistant message in history (as the raw JSON string)
+                self.messages.append({"role": "assistant", "content": last_raw})
+                return data
+
+            last_validation_errors = result.errors
+
+            self._debug(f"Schema validation failed with errors: {result.errors}")
+
+            if attempt < self.max_retries:
+                self._inject_corrective_system_message(
+                    error_code="SCHEMA_VALIDATION_FAILED",
+                    details=result.errors,
+                    raw_response=last_raw,
+                )
+                continue
+
+            # No retries left -> return structured error
+            return {
+                "error": "SCHEMA_VALIDATION_FAILED",
+                "raw_response": last_raw,
+                "details": result.errors,
+            }
+
+        # Defensive fallback (should never happen)
+        return {
+            "error": "UNKNOWN",
+            "raw_response": last_raw,
+            "details": last_validation_errors or last_parse_error or "Unknown failure",
         }
 
-        # Perform the API request (Responses API)
-        response = self.client.responses.create(**payload)
+    def _inject_corrective_system_message(
+        self,
+        error_code: str,
+        details: List[str],
+        raw_response: str,
+    ) -> None:
+        """
+        Inject a corrective system message to guide the model to fix its output on the next attempt.
+        """
+        # Keep the corrective message explicit and contract-focused.
+        # Do not include long raw responses (can bloat context); include only a short excerpt if needed.
+        excerpt = raw_response[:400].replace("\n", " ").strip()
 
-        # Extract raw text from the response (JSON string)
-        raw_text = response.output_text
+        corrective = (
+            "CORRECTION REQUIRED.\n"
+            "You MUST return ONLY a valid JSON object that EXACTLY matches the required contract.\n"
+            "No markdown, no backticks, no extra keys, no missing keys, no renamed fields.\n"
+            f"Previous failure type: {error_code}\n"
+            "Validation errors:\n"
+            + "\n".join([f"- {e}" for e in details])
+            + "\n"
+            f"Previous response excerpt (first 400 chars): {excerpt}\n"
+            "Now return the corrected JSON object only."
+        )
 
-        # Try to parse JSON
-        try:
-            parsed = json.loads(raw_text)
-            return parsed
-        except Exception as e:
-            # We do NOT retry here (this comes later)
-            return {
-                "error": "INVALID_JSON",
-                "raw_response": raw_text,
-                "details": str(e),
-            }
+        self.messages.append({"role": "system", "content": corrective})
