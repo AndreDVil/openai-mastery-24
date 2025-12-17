@@ -89,6 +89,6 @@ logs/
 *.log
 
 # Benchmark artifacts
-runs/results.jsonl
-runs/*.json
-runs/*.md
+**/runs/results.jsonl
+**/runs/*.json
+**/runs/*.md
