@@ -1,4 +1,16 @@
+# Core OpenAI SDK (fixed version for consistency)
 openai==2.9.0
+
+# Environment variables (.env)
 python-dotenv
+
+# Notebooks / demos
 jupyter
+ipykernel
+
+# Pretty printing / code formatting in notebooks
 pygments
+rich
+
+# Optional but useful
+tqdm
