@@ -87,3 +87,8 @@ node_module_
 # Project logs
 logs/
 *.log
+
+# Benchmark artifacts
+runs/results.jsonl
+runs/*.json
+runs/*.md
